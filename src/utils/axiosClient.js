@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosClient = axios.create({
-  baseURL: "https://code-ace-backend1.onrender.com",
+  baseURL: "https://code-masterbackend1.vercel.app",
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json'
