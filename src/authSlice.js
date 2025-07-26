@@ -48,11 +48,31 @@ export const loginUser = createAsyncThunk(
 //   }
 // );
 
+// export const logoutUser = createAsyncThunk(
+//   'auth/logout',
+//   async (_, { rejectWithValue }) => {
+//     try {
+//       localStorage.removeItem("token");
+//       await axiosClient.post('/user/logout');
+//       return null;
+//     } catch (error) {
+//       return rejectWithValue(extractError(error));
+//     }
+//   }
+// );
+
 export const logoutUser = createAsyncThunk(
   'auth/logout',
   async (_, { rejectWithValue }) => {
     try {
-      localStorage.removeItem("token");
+      // Safely remove token (works in browser only)
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem("token");
+        // Also clear other related items if needed
+        localStorage.removeItem("user");
+        sessionStorage.removeItem("tempData");
+      }
+      
       await axiosClient.post('/user/logout');
       return null;
     } catch (error) {
